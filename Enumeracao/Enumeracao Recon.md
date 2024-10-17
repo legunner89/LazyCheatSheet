@@ -35,6 +35,9 @@ gobuster dir -u http://192.168.50.242 -w /usr/share/wordlists/dirb/common.txt -o
 
 gobuster dir -u http://192.168.208.147:8000 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 32
 
+
+feroxbuster -u http://192.168.125.111:8080/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 32
+
 ##Nikto web server scan
 nikto -h 10.10.10.10
 
@@ -78,7 +81,27 @@ rpcclient -U "" 10.10.10.10
 ## Connect to SMB share
 smbclient //MOUNT/share
 ```
+- https://lzone.de/cheat-sheet/SMB
 
+```
+smbclient //<server>/<share> -U <user>
+```
+
+```
+Per the smbclient manpage, you need to use the mget command, with a mask and recursion and prompt set. Then cd to the directory you want to get recursively:
+
+smbclient '\\server\share'
+mask ""
+recurse ON
+prompt OFF
+cd 'path\to\remote\dir'
+lcd '~/path/to/download/to/'
+mget *
+
+Or, all on one line,
+
+smbclient '\\server\share' -N -c 'prompt OFF;recurse ON;cd 'path\to\directory\';lcd '~/path/to/download/to/';mget *'`
+```
 
 
 ### EntryPoints
