@@ -12,7 +12,10 @@ Geolocalização:
 ### NMAP
 
 ```
-nmap -sC -sV 10.10.10.10 -p- 
+nmap -sC -sV 10.10.10.10 -p-
+sudo nmap -sU -sS --script smb-os-discovery.nse -p
+sudo nmap -sU -sS --script smb-enum-users.nse -p U:137,T:139 192.168.90.82
+smbclient -L 192.168.90.82 -U admin    
 ```
 
 ### WEB
