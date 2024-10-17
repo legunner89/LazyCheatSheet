@@ -31,11 +31,29 @@ big.txt -t 80 -a 'Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefo
 ##Gobuster search with le extension
 gobuster -u 10.10.10.10 -w /usr/share/seclists/Discovery/Web_Content/common.txt -t 80 -a Linux -x .txt,.php
 
+gobuster dir -u http://192.168.50.242 -w /usr/share/wordlists/dirb/common.txt -o mailsrv1/gobuster -x txt,pdf,config
+
+gobuster dir -u http://192.168.208.147:8000 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 32
+
 ##Nikto web server scan
 nikto -h 10.10.10.10
 
 ##Wordpress scan
 wpscan -u 10.10.10.10/wp/
+
+
+## Listas
+-w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt
+-w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+-w /usr/share/wordlists/dirb/common.txt
+
+## Palavras
+Adicionar nas listas!!
+
+cms
+cmsms
+elFinder
+seclab
 ```
 
 ### SMB

